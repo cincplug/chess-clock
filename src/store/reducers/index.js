@@ -1,3 +1,4 @@
+
 const msPerMinute = 60 * 1000;
 const defaultInitialTime = 15 * msPerMinute;
 
@@ -16,7 +17,7 @@ function rootReducer(state = initialState, action) {
     case "START_GAME":
       return {
         ...state,
-        gameStarted: !state.gameStarted
+        gameStarted: true
       };
 
     default:

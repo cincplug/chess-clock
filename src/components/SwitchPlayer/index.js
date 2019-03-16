@@ -3,19 +3,16 @@ import { connect } from "react-redux";
 
 const mapStateToProps = state => {
   return {
-    buttonText: state.gameStarted ? "nije počelo" : "počelo"
+    buttonText: state.gameStarted ? "Switch player" : "Start game"
   };
 };
 
-const handleClick = () => {
-  
-};
-
-class SwitchPlayer extends Component {
-  render() {
-    const { buttonText } = this.props;
-    return <button onClick={handleClick}>{buttonText}</button>;
-  }
+function SwitchPlayer({ buttonText, dispatch }) {
+  return (
+    <button onClick={() => dispatch({ type: "START_GAME" })}>
+      {buttonText}
+    </button>
+  );
 }
 
 const SwitchPlayerButton = connect(mapStateToProps)(SwitchPlayer);
