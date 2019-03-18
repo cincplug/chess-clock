@@ -7,9 +7,8 @@ const initialState = {
     black: defaultInitialTime
   },
   currentPlayer: "white",
-  timeline: [
-      2000, 4000, 1500, 7000, 8000, 2400, 1432
-  ]
+  currentMoveDuration: 0,
+  timeline: [2000, 4000, 1500, 7000, 8000, 2400, 1432, 2000]
 };
 
 function rootReducer(state = initialState, action) {
@@ -24,7 +23,19 @@ function rootReducer(state = initialState, action) {
       const nextPlayer = state.currentPlayer === "white" ? "black" : "white";
       return {
         ...state,
-        currentPlayer: nextPlayer
+        currentPlayer: nextPlayer,
+        currentMoveDuration: 0,
+        timeline: state.timeline.concat([state.currentMoveDuration])
+      };
+
+    case "PROCESS_TIME":
+      const { currentPlayer, remainingTime } = state;
+      return {
+        ...state,
+        currentMoveDuration: state.currentMoveDuration + 1,
+        remainingTime: {
+          [currentPlayer]: remainingTime[currentPlayer] - 1
+        }
       };
 
     default:

@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
+  const { timeline, currentMoveDuration } = state;
   return {
-    timeline: state.timeline
+    timeline,
+    currentMoveDuration
   };
 };
 
@@ -26,11 +28,17 @@ const Move = styled.div`
 
 class Timeline extends PureComponent {
   render() {
-    const { timeline } = this.props;
-    const elapsedTime = timeline.reduce((partial, a) => partial + a);
-    const moves = timeline.map(move => (
-      <Move style={{ width: (move * 100) / elapsedTime + "%" }} />
-    ));
+    const { timeline, currentMoveDuration } = this.props;
+    let elapsedTime = timeline.reduce((partial, a) => partial + a);
+    elapsedTime += currentMoveDuration;
+    const moves = timeline
+      .concat(currentMoveDuration)
+      .map((move, index) => (
+        <Move
+          key={"move" + index}
+          style={{ width: (move * 100) / elapsedTime + "%" }}
+        />
+      ));
     return <Moves>{moves}</Moves>;
   }
 }

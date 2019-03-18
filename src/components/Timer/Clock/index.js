@@ -24,10 +24,10 @@ const Dial = styled.div`
 
 class Clock extends Component {
   render() {
-    const { player, remainingTime } = this.props;
+    const { player, remainingTime, dispatch } = this.props;
     const displayTime = moment(remainingTime).format("mm:ss.SSS");
     return (
-      <Dial bg={player}>
+      <Dial bg={player} onClick={() => dispatch({ type: 'PROCESS_TIME' })}>
         <div>{player}</div>
         <div>{displayTime}</div>
       </Dial>
