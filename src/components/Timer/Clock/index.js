@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -22,12 +22,12 @@ const Dial = styled.div`
   text-transform: capitalize;
 `;
 
-class Clock extends Component {
+class Clock extends PureComponent {
   render() {
-    const { player, remainingTime, dispatch } = this.props;
+    const { player, remainingTime } = this.props;
     const displayTime = moment(remainingTime).format("mm:ss.SSS");
     return (
-      <Dial bg={player} onClick={() => dispatch({ type: 'PROCESS_TIME' })}>
+      <Dial bg={player}>
         <div>{player}</div>
         <div>{displayTime}</div>
       </Dial>

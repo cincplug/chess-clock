@@ -29,8 +29,9 @@ const Move = styled.div`
 class Timeline extends PureComponent {
   render() {
     const { timeline, currentMoveDuration } = this.props;
-    let elapsedTime = timeline.reduce((partial, a) => partial + a);
-    elapsedTime += currentMoveDuration;
+    let elapsedTime = timeline.length
+      ? timeline.reduce((partial, a) => partial + a) + currentMoveDuration
+      : 1;
     const moves = timeline
       .concat(currentMoveDuration)
       .map((move, index) => (

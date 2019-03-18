@@ -1,13 +1,20 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { startGame, switchPlayer, processTime } from "../../store/actions";
 
 const mapStateToProps = state => {
   return {
-    buttonAction: state.gameStarted ? "SWITCH_PLAYER" : "START_GAME",
+    gameStarted: state.gameStarted,
     buttonText: state.gameStarted ? "Next move" : "Start",
     buttonBg: state.currentPlayer
   };
+};
+
+const mapDispatchToProps = {
+  startGame,
+  switchPlayer,
+  processTime
 };
 
 const Button = styled.div`
@@ -20,15 +27,27 @@ const Button = styled.div`
   outline: none;
 `;
 
-function MainCTA({ buttonAction, buttonText, buttonBg, dispatch }) {
-  return (
-    <Button
-      onClick={() => dispatch({ type: buttonAction })}
-      buttonBg={buttonBg}
-    >
-      {buttonText}
-    </Button>
-  );
+class MainCTA extends PureComponent {
+  handleClick() {
+    if (this.props.gameStarted) {
+      this.props.switchPlayer();
+    } else {
+      this.props.startGame();
+      setInterval(() => this.props.processTime(), 1);
+    }
+  }
+
+  render() {
+    const { buttonText, buttonBg } = this.props;
+    return (
+      <Button onClick={() => this.handleClick()} buttonBg={buttonBg}>
+        {buttonText}
+      </Button>
+    );
+  }
 }
 
-export default connect(mapStateToProps)(MainCTA);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainCTA);

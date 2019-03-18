@@ -8,7 +8,7 @@ const initialState = {
   },
   currentPlayer: "white",
   currentMoveDuration: 0,
-  timeline: [2000, 4000, 1500, 7000, 8000, 2400, 1432, 2000]
+  timeline: []
 };
 
 function rootReducer(state = initialState, action) {
