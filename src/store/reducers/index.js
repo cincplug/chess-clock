@@ -1,6 +1,5 @@
 const msPerMinute = 60 * 1000;
 const defaultInitialTime = 15 * msPerMinute;
-
 const initialState = {
   gameStarted: false,
   remainingTime: {
