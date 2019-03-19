@@ -23,10 +23,10 @@ function rootReducer(state = initialState, action) {
       const { currentPlayer, remainingTime, currentMoveDuration } = state;
       return {
         ...state,
-        currentMoveDuration: currentMoveDuration + 1,
+        currentMoveDuration: currentMoveDuration + 10,
         remainingTime: {
           ...remainingTime,
-          [currentPlayer]: remainingTime[currentPlayer] - 1
+          [currentPlayer]: remainingTime[currentPlayer] - 10
         }
       };
 

@@ -30,8 +30,7 @@ const MainWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 5rem;
-`
-
+`;
 
 const Button = styled.div`
   color: grey;
@@ -58,14 +57,16 @@ const SmallButton = styled(Button)`
 `;
 
 class Main extends PureComponent {
+
   timer() {
-    this.gameInterval = setInterval(() => {
+    let accurateInterval = require('accurate-interval');
+    this.gameInterval = accurateInterval(() => {
       this.props.processTime();
       if (this.props.remainingTime[this.props.currentPlayer] === 0) {
-        clearInterval(this.gameInterval);
+        this.gameInterval.clear();
         this.props.endGame();
       }
-    }, 1);
+    }, 10, {aligned: true, immediate: true});
   }
 
   startButtonClick() {
@@ -79,7 +80,7 @@ class Main extends PureComponent {
 
   stopButtonClick() {
     this.props.endGame();
-    clearInterval(this.gameInterval);
+    this.gameInterval.clear();
   }
 
   render() {
