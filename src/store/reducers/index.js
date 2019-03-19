@@ -6,7 +6,7 @@ const initialState = {
     white: defaultInitialTime,
     black: defaultInitialTime
   },
-  currentPlayer: "white",
+  currentPlayer: "",
   currentMoveDuration: 0,
   timeline: []
 };
@@ -16,7 +16,8 @@ function rootReducer(state = initialState, action) {
     case "START_GAME":
       return {
         ...state,
-        gameStarted: true
+        gameStarted: true,
+        currentPlayer: "white"
       };
 
     case "SWITCH_PLAYER":

@@ -7,7 +7,7 @@ const mapStateToProps = state => {
   return {
     gameStarted: state.gameStarted,
     buttonText: state.gameStarted ? "Next move" : "Start",
-    buttonBg: state.currentPlayer
+    buttonBg: state.currentPlayer || "white"
   };
 };
 
@@ -39,7 +39,7 @@ class MainCTA extends PureComponent {
       this.props.switchPlayer();
     } else {
       this.props.startGame();
-      setInterval(() => this.props.processTime(), 100);
+      setInterval(() => this.props.processTime(), 1);
     }
   }
 
