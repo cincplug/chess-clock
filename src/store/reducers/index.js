@@ -1,4 +1,4 @@
-import { initialState } from '../../config.js';
+import { initialState } from "../initialState.js";
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -6,6 +6,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...initialState,
         gameStarted: true,
+        startTime: Date.now(),
         currentPlayer: "white"
       };
 
@@ -20,13 +21,18 @@ function rootReducer(state = initialState, action) {
       };
 
     case "PROCESS_TIME":
-      const { currentPlayer, remainingTime, currentMoveDuration } = state;
+      const {
+        currentPlayer,
+        remainingTime,
+        currentMoveDuration,
+        msInterval
+      } = state;
       return {
         ...state,
-        currentMoveDuration: currentMoveDuration + 10,
+        currentMoveDuration: currentMoveDuration + msInterval,
         remainingTime: {
           ...remainingTime,
-          [currentPlayer]: remainingTime[currentPlayer] - 10
+          [currentPlayer]: remainingTime[currentPlayer] - msInterval
         }
       };
 
@@ -34,7 +40,14 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         gameStarted: false,
-        gameEnded: true
+        gameEnded: true,
+        endTime: Date.now()
+      };
+
+    case "SET_ACCURACY":
+      return {
+        ...state,
+        msInterval: action.accuracy
       };
 
     default:

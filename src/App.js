@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Timer from "./components/Timer";
 import Main from "./components/Main";
 import Timeline from "./components/Timeline";
+import Accuracy from "./components/Accuracy";
 import styled from "styled-components";
 import "./App.css";
 
@@ -20,6 +21,7 @@ class App extends Component {
         <Timer />
         <Main />
         <Timeline />
+        <Accuracy />
       </Layout>
     );
   }

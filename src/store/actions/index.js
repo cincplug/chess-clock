@@ -13,3 +13,8 @@ export const processTime = () => ({
 export const endGame = () => ({
   type: "END_GAME"
 });
+
+export const setAccuracy = accuracy => ({
+  type: "SET_ACCURACY",
+  accuracy: accuracy
+});

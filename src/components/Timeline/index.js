@@ -1,12 +1,14 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import ElapsedTime from "./ElapsedTime";
 
 const mapStateToProps = state => {
-  const { timeline, currentMoveDuration } = state;
+  const { timeline, currentMoveDuration, gameEnded } = state;
   return {
     timeline,
-    currentMoveDuration
+    currentMoveDuration,
+    gameEnded
   };
 };
 
@@ -29,10 +31,11 @@ const Move = styled.div`
 
 class Timeline extends PureComponent {
   render() {
-    const { timeline, currentMoveDuration } = this.props;
-    let elapsedTime = timeline.length
-      ? timeline.reduce((partial, a) => partial + a) + currentMoveDuration
-      : 1;
+    const { timeline, currentMoveDuration, gameEnded } = this.props;
+    const elapsedTime =
+      timeline.length
+        ? timeline.reduce((partial, a) => partial + a) + currentMoveDuration
+        : currentMoveDuration;
     const moves = timeline
       .concat(currentMoveDuration)
       .map((move, index) => (
@@ -41,7 +44,12 @@ class Timeline extends PureComponent {
           style={{ width: (move * 100) / elapsedTime + "%" }}
         />
       ));
-    return <Moves>{moves}</Moves>;
+    return (
+      <>
+        <Moves>{moves}</Moves>
+        {gameEnded && <ElapsedTime counted={elapsedTime} />}
+      </>
+    );
   }
 }
 

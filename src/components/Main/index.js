@@ -7,13 +7,22 @@ import {
   processTime,
   endGame
 } from "../../store/actions";
+import accurateInterval from "accurate-interval";
 
 const mapStateToProps = state => {
+  const {
+    gameStarted,
+    gameEnded,
+    remainingTime,
+    currentPlayer,
+    msInterval
+  } = state;
   return {
-    gameStarted: state.gameStarted,
-    gameEnded: state.gameEnded,
-    remainingTime: state.remainingTime,
-    currentPlayer: state.currentPlayer,
+    gameStarted,
+    gameEnded,
+    remainingTime,
+    currentPlayer,
+    msInterval,
     buttonText: state.gameStarted ? "Next move" : "Start game",
     buttonBg: state.currentPlayer || "white"
   };
@@ -57,16 +66,18 @@ const SmallButton = styled(Button)`
 `;
 
 class Main extends PureComponent {
-
   timer() {
-    let accurateInterval = require('accurate-interval');
-    this.gameInterval = accurateInterval(() => {
-      this.props.processTime();
-      if (this.props.remainingTime[this.props.currentPlayer] === 0) {
-        this.gameInterval.clear();
-        this.props.endGame();
-      }
-    }, 10, {aligned: true, immediate: true});
+    this.gameInterval = accurateInterval(
+      () => {
+        this.props.processTime();
+        if (this.props.remainingTime[this.props.currentPlayer] === 0) {
+          this.gameInterval.clear();
+          this.props.endGame();
+        }
+      },
+      this.props.msInterval,
+      { aligned: true, immediate: true }
+    );
   }
 
   startButtonClick() {
