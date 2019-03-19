@@ -6,6 +6,8 @@ import { startGame, switchPlayer, processTime } from "../../store/actions";
 const mapStateToProps = state => {
   return {
     gameStarted: state.gameStarted,
+    gameEnded: state.gameEnded,
+    remainingTime: state.remainingTime,
     buttonText: state.gameStarted ? "Next move" : "Start",
     buttonBg: state.currentPlayer || "white"
   };
@@ -34,12 +36,21 @@ const Button = styled.div`
 `;
 
 class MainCTA extends PureComponent {
+  timer() {
+    let gameInterval = setInterval(() => {
+      this.props.processTime();
+      if (this.props.gameEnded) {
+        clearInterval(gameInterval);
+      }
+    }, 1);
+  }
+
   handleClick() {
     if (this.props.gameStarted) {
       this.props.switchPlayer();
     } else {
       this.props.startGame();
-      setInterval(() => this.props.processTime(), 1);
+      this.timer();
     }
   }
 

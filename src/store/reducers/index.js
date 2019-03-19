@@ -2,6 +2,7 @@ const msPerMinute = 60 * 1000;
 const defaultInitialTime = 15 * msPerMinute;
 const initialState = {
   gameStarted: false,
+  gameEnded: false,
   remainingTime: {
     white: defaultInitialTime,
     black: defaultInitialTime
@@ -15,7 +16,7 @@ function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "START_GAME":
       return {
-        ...state,
+        ...initialState,
         gameStarted: true,
         currentPlayer: "white"
       };
@@ -31,7 +32,14 @@ function rootReducer(state = initialState, action) {
       };
 
     case "PROCESS_TIME":
-      const { currentPlayer, remainingTime, currentMoveDuration } = state;
+      const { currentPlayer, remainingTime, currentMoveDuration, gameEnded } = state;
+      if(remainingTime[currentPlayer] === 0) {
+        return {
+          ...state,
+          gameStarted: false,
+          gameEnded: true
+        }
+      }
       return {
         ...state,
         currentMoveDuration: currentMoveDuration + 1,
