@@ -22,8 +22,10 @@ const Dial = styled.div`
   background: ${props => props.bg};
   color: gray;
   text-transform: capitalize;
+  box-sizing: border-box;
+  border: 5px solid transparent;
   &.current {
-    box-shadow: 0 0 5px #4ad;
+    border-color: #4ad;
   }
 `;
 

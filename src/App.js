@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Timer from "./components/Timer";
-import MainCTA from "./components/MainCTA";
+import Main from "./components/Main";
 import Timeline from "./components/Timeline";
 import styled from "styled-components";
 import "./App.css";
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <Layout>
         <Timer />
-        <MainCTA />
+        <Main />
         <Timeline />
       </Layout>
     );

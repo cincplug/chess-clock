@@ -26,6 +26,13 @@ const mapDispatchToProps = {
   endGame
 };
 
+const MainWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+`
+
+
 const Button = styled.div`
   color: grey;
   background: ${props => props.buttonBg};
@@ -35,6 +42,7 @@ const Button = styled.div`
   font-size: 18px;
   outline: none;
   transition: all 0.1s ease-in;
+  text-align: center;
   &:hover {
     background: #4ad;
     color: white;
@@ -42,18 +50,25 @@ const Button = styled.div`
   }
 `;
 
-class MainCTA extends PureComponent {
+const SmallButton = styled(Button)`
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  font-size: 16px;
+`;
+
+class Main extends PureComponent {
   timer() {
-    let gameInterval = setInterval(() => {
+    this.gameInterval = setInterval(() => {
       this.props.processTime();
       if (this.props.remainingTime[this.props.currentPlayer] === 0) {
-        clearInterval(gameInterval);
+        clearInterval(this.gameInterval);
         this.props.endGame();
       }
     }, 1);
   }
 
-  handleClick() {
+  startButtonClick() {
     if (this.props.gameStarted) {
       this.props.switchPlayer();
     } else {
@@ -62,12 +77,24 @@ class MainCTA extends PureComponent {
     }
   }
 
+  stopButtonClick() {
+    this.props.endGame();
+    clearInterval(this.gameInterval);
+  }
+
   render() {
-    const { buttonText, buttonBg } = this.props;
+    const { buttonText, buttonBg, gameStarted } = this.props;
     return (
-      <Button onClick={() => this.handleClick()} buttonBg={buttonBg}>
-        {buttonText}
-      </Button>
+      <MainWrap>
+        <Button onClick={() => this.startButtonClick()} buttonBg={buttonBg}>
+          {buttonText}
+        </Button>
+        {gameStarted && (
+          <SmallButton onClick={() => this.stopButtonClick()}>
+            Stop game
+          </SmallButton>
+        )}
+      </MainWrap>
     );
   }
 }
@@ -75,4 +102,4 @@ class MainCTA extends PureComponent {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainCTA);
+)(Main);
