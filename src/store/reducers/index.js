@@ -32,14 +32,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case "PROCESS_TIME":
-      const { currentPlayer, remainingTime, currentMoveDuration, gameEnded } = state;
-      if(remainingTime[currentPlayer] === 0) {
-        return {
-          ...state,
-          gameStarted: false,
-          gameEnded: true
-        }
-      }
+      const { currentPlayer, remainingTime, currentMoveDuration } = state;
       return {
         ...state,
         currentMoveDuration: currentMoveDuration + 1,
@@ -47,6 +40,13 @@ function rootReducer(state = initialState, action) {
           ...remainingTime,
           [currentPlayer]: remainingTime[currentPlayer] - 1
         }
+      };
+
+    case "END_GAME":
+      return {
+        ...state,
+        gameStarted: false,
+        gameEnded: true
       };
 
     default:

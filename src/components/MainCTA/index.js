@@ -1,14 +1,20 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { startGame, switchPlayer, processTime } from "../../store/actions";
+import {
+  startGame,
+  switchPlayer,
+  processTime,
+  endGame
+} from "../../store/actions";
 
 const mapStateToProps = state => {
   return {
     gameStarted: state.gameStarted,
     gameEnded: state.gameEnded,
     remainingTime: state.remainingTime,
-    buttonText: state.gameStarted ? "Next move" : "Start",
+    currentPlayer: state.currentPlayer,
+    buttonText: state.gameStarted ? "Next move" : "Start game",
     buttonBg: state.currentPlayer || "white"
   };
 };
@@ -16,7 +22,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   startGame,
   switchPlayer,
-  processTime
+  processTime,
+  endGame
 };
 
 const Button = styled.div`
@@ -39,8 +46,9 @@ class MainCTA extends PureComponent {
   timer() {
     let gameInterval = setInterval(() => {
       this.props.processTime();
-      if (this.props.gameEnded) {
+      if (this.props.remainingTime[this.props.currentPlayer] === 0) {
         clearInterval(gameInterval);
+        this.props.endGame();
       }
     }, 1);
   }

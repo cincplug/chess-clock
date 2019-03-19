@@ -9,3 +9,7 @@ export const switchPlayer = () => ({
 export const processTime = () => ({
   type: "PROCESS_TIME"
 });
+
+export const endGame = () => ({
+  type: "END_GAME"
+});
