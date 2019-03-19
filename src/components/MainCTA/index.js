@@ -25,6 +25,12 @@ const Button = styled.div`
   border-radius: 4px;
   font-size: 18px;
   outline: none;
+  transition: all 0.1s ease-in;
+  &:hover {
+    background: #4ad;
+    color: white;
+    cursor: pointer;
+  }
 `;
 
 class MainCTA extends PureComponent {
@@ -33,7 +39,7 @@ class MainCTA extends PureComponent {
       this.props.switchPlayer();
     } else {
       this.props.startGame();
-      setInterval(() => this.props.processTime(), 1);
+      setInterval(() => this.props.processTime(), 100);
     }
   }
 

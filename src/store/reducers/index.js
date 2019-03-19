@@ -21,19 +21,21 @@ function rootReducer(state = initialState, action) {
 
     case "SWITCH_PLAYER":
       const nextPlayer = state.currentPlayer === "white" ? "black" : "white";
+      const appendDuration = state.currentMoveDuration;
       return {
         ...state,
         currentPlayer: nextPlayer,
         currentMoveDuration: 0,
-        timeline: state.timeline.concat([state.currentMoveDuration])
+        timeline: state.timeline.concat(appendDuration)
       };
 
     case "PROCESS_TIME":
-      const { currentPlayer, remainingTime } = state;
+      const { currentPlayer, remainingTime, currentMoveDuration } = state;
       return {
         ...state,
-        currentMoveDuration: state.currentMoveDuration + 1,
+        currentMoveDuration: currentMoveDuration + 1,
         remainingTime: {
+          ...remainingTime,
           [currentPlayer]: remainingTime[currentPlayer] - 1
         }
       };

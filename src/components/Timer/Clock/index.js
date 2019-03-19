@@ -25,7 +25,8 @@ const Dial = styled.div`
 class Clock extends PureComponent {
   render() {
     const { player, remainingTime } = this.props;
-    const displayTime = moment(remainingTime).format("mm:ss.SSS");
+    const d = moment(remainingTime);
+    const displayTime = d.format("mm:ss.SSS");
     return (
       <Dial bg={player}>
         <div>{player}</div>

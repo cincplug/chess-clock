@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 const Moves = styled.div`
   display: flex;
   width: 80%;
+  background: white;
 `;
 
 const Move = styled.div`
