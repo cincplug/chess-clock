@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "accurate-interval": "^1.0.9",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.3.0",
     "js-yaml": "^3.13.1",
     "moment": "^2.24.0",
     "react": "^16.8.4",
